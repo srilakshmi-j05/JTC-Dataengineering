@@ -1,0 +1,31 @@
+db.Factstore.aggregate([
+
+    // Join with user_info table
+    {
+        $lookup:{
+            from: "Dimstore",       // other table name
+            localField: "storeID",   // name of users table field
+            foreignField: "StoreID", // name of userinfo table field
+            as: "Dimstore"         // alias for userinfo table
+        }
+    },
+{   $unwind:"$Dimstore" },
+
+ {
+        $lookup:{
+            from: "Dimproducts",       // other table name
+            localField: "ProductID",   // name of users table field
+            foreignField: "ProductID", // name of userinfo table field
+            as: "Dimproducts"         // alias for userinfo table
+        }
+    },
+{   $unwind:"$Dimproducts" },
+
+{
+        $match:{
+            $and:[{"storeID" : "4"}]
+        }
+    }
+
+]);
+
