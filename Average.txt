@@ -1,0 +1,11 @@
+db.Fact.aggregate(
+   [
+     {
+       $group:
+         {
+           _id: "$ProductID",
+           OnHandQuantity: { $avg: "$OnHandQuantity" }
+         }
+     }
+   ]
+)
